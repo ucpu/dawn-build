@@ -16,7 +16,7 @@ jobs:
     - name: submodules
       shell: bash
       run: |
-        git submodule update --init --recursive || echo "some submodules may have failed and it may be ok"
+        git submodule update --init --recursive --jobs 8 || echo "some submodules may have failed and it may be ok"
 
     - name: build
       shell: bash
