@@ -1,0 +1,30 @@
+name: Build
+on: [push]
+
+jobs:
+  Build:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2025, ubuntu-24.04]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: submodules
+      shell: bash
+      run: |
+        git submodule update --init --recursive || echo "some submodules may have failed and it may be ok"
+
+    - name: build
+      shell: bash
+      run: |
+        ./run.sh
+
+    - name: upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: dawn-${{ runner.os }}
+        path: install_*
