@@ -1,0 +1,10 @@
+/install*
+/build*
+/Win32
+/x64
+/.vs
+/out
+CMakeLists.txt.user
+CMakeSettings.json
+*~
+*.TMP
