@@ -21,6 +21,7 @@ jobs:
     - name: build
       shell: bash
       run: |
+        root_dir=`pwd`
         mkdir build
         cd build
         cmake ..
@@ -48,6 +49,7 @@ jobs:
     - name: build
       shell: bash
       run: |
+        root_dir=`pwd`
         mkdir build
         cd build
         cmake -DCMAKE_BUILD_TYPE=release ..
@@ -74,7 +76,6 @@ jobs:
 
     - name: package
       run: |
-        root_dir=`pwd`
         mkdir -p install/dawn
         cd install/dawn
         cp ../../DawnConfig.cmake .
