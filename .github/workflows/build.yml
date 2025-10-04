@@ -2,13 +2,13 @@ name: Build
 on: [push]
 
 jobs:
-  Build:
-    name: ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+  Windows:
+    name: windows-${{ matrix.config }}
+    runs-on: windows-2025
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2025, ubuntu-24.04]
+        config: [release, debug]
 
     steps:
     - uses: actions/checkout@v4
@@ -21,17 +21,48 @@ jobs:
     - name: build
       shell: bash
       run: |
-        ./run.sh
+        mkdir build
+        cd build
+        cmake ..
+        cmake --build . --config ${{ matrix.config }} ${paralel}
+        cmake --install . --config ${{ matrix.config }} --prefix "${root_dir}/install"
 
     - name: upload
       uses: actions/upload-artifact@v4
       with:
         name: dawn-${{ runner.os }}
-        path: install_*
+        path: install
+
+  Linux:
+    name: linux
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: submodules
+      shell: bash
+      run: |
+        git submodule update --init --recursive --jobs 8 || echo "some submodules may have failed and it may be ok"
+
+    - name: build
+      shell: bash
+      run: |
+        mkdir build
+        cd build
+        cmake -DCMAKE_BUILD_TYPE=release ..
+        cmake --build . ${paralel}
+        cmake --install . --prefix "${root_dir}/install"
+
+    - name: upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: dawn-${{ runner.os }}
+        path: install
 
   Package:
     runs-on: ubuntu-latest
-    needs: Build
+    needs: [Windows, Linux]
     steps:
     - uses: actions/checkout@v4
 
@@ -43,7 +74,16 @@ jobs:
 
     - name: package
       run: |
-        ./package.sh
+        root_dir=`pwd`
+        mkdir -p install/dawn
+        cd install/dawn
+        cp ../../DawnConfig.cmake .
+        cp -r ../include .
+        mkdir lib
+        cp ../lib/*.a lib
+        cp ../lib/*.lib lib
+        cd ..
+        zip -r ../dawn.zip dawn
 
     - name: release
       uses: softprops/action-gh-release@v1

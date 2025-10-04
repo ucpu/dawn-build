@@ -33,16 +33,6 @@ set(TINT_BUILD_IR_BINARY OFF CACHE INTERNAL "Build IR binary format support" FOR
 set(TINT_BUILD_TESTS OFF CACHE INTERNAL "Build tests" FORCE)
 set(TINT_ENABLE_IR_VALIDATION ON CACHE INTERNAL "Enable IR validation for backend codegen" FORCE)
 
-
-#add_library(tint STATIC)
-#install(TARGETS tint ARCHIVE DESTINATION lib LIBRARY DESTINATION lib RUNTIME DESTINATION bin)
-#function(tint_add_target TARGET KIND)
-#	tint_add_target_override(${TARGET} ${KIND})
-#	if(KIND STREQUAL lib)
-#		target_link_libraries(tint_aggregated ${TARGET})
-#	endif()
-#endfunction(tint_add_target)
-
+set(CMAKE_DEBUG_POSTFIX _debug)
 
 add_subdirectory(dawn)
-
