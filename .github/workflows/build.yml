@@ -31,7 +31,7 @@ jobs:
     - name: upload
       uses: actions/upload-artifact@v4
       with:
-        name: dawn-${{ runner.os }}
+        name: dawn-windows-${{ matrix.config }}
         path: install
 
   Linux:
@@ -59,7 +59,7 @@ jobs:
     - name: upload
       uses: actions/upload-artifact@v4
       with:
-        name: dawn-${{ runner.os }}
+        name: dawn-linux
         path: install
 
   Package:
