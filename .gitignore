@@ -4,6 +4,7 @@
 /x64
 /.vs
 /out
+/dawn.zip
 CMakeLists.txt.user
 CMakeSettings.json
 *~
