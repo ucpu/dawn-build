@@ -33,6 +33,6 @@ set(TINT_BUILD_IR_BINARY OFF CACHE INTERNAL "Build IR binary format support" FOR
 set(TINT_BUILD_TESTS OFF CACHE INTERNAL "Build tests" FORCE)
 set(TINT_ENABLE_IR_VALIDATION ON CACHE INTERNAL "Enable IR validation for backend codegen" FORCE)
 
-set(CMAKE_DEBUG_POSTFIX _debug)
-
 add_subdirectory(dawn)
+
+set_target_properties(webgpu_dawn PROPERTIES DEBUG_POSTFIX _debug)

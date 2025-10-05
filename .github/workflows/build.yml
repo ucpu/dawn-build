@@ -79,10 +79,10 @@ jobs:
         mkdir -p install/dawn
         cd install/dawn
         cp ../../DawnConfig.cmake .
-        cp -r ../include .
+        cp -r ../../include .
         mkdir lib
-        cp ../lib/*.a lib
-        cp ../lib/*.lib lib
+        cp ../../lib/*.a lib
+        cp ../../lib/*.lib lib
         cd ..
         zip -r ../dawn.zip dawn
 
