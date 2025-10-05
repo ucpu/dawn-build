@@ -11,3 +11,6 @@ if(WIN32)
 else()
 	set_target_properties(dawn_static PROPERTIES IMPORTED_LOCATION "${CMAKE_CURRENT_LIST_DIR}/lib/libwebgpu_dawn.a")
 endif()
+
+add_library(dawn::static ALIAS dawn_static)
+add_library(dawn::headers ALIAS dawn_headers)

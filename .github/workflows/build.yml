@@ -16,7 +16,7 @@ jobs:
     - name: submodules
       shell: bash
       run: |
-        git submodule update --init --recursive --jobs 8 || echo "some submodules may have failed and it may be ok"
+        ./submodules.sh
 
     - name: build
       shell: bash
@@ -24,7 +24,7 @@ jobs:
         root_dir=`pwd`
         mkdir build
         cd build
-        cmake ..
+        cmake -Tclangcl ..
         cmake --build . --config ${{ matrix.config }} ${paralel}
         cmake --install . --config ${{ matrix.config }} --prefix "${root_dir}/install"
 
@@ -36,7 +36,10 @@ jobs:
 
   Linux:
     name: linux
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
+    env:
+      CC: clang
+      CXX: clang++
 
     steps:
     - uses: actions/checkout@v4
@@ -44,7 +47,7 @@ jobs:
     - name: submodules
       shell: bash
       run: |
-        git submodule update --init --recursive --jobs 8 || echo "some submodules may have failed and it may be ok"
+        ./submodules.sh
 
     - name: build
       shell: bash

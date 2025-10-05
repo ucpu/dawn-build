@@ -1,3 +1,6 @@
 [submodule "dawn/dawn"]
 	path = dawn/dawn
 	url = https://dawn.googlesource.com/dawn
+[submodule "cage"]
+	path = cage
+	url = https://github.com/ucpu/cage.git
